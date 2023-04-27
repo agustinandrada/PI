@@ -15,6 +15,9 @@ const allDogs = async (name) => {
       include: {
         model: Temperament,
         attributes: ["name"],
+        through: {
+          attributes: [],
+        },
       },
     });
 
@@ -54,6 +57,9 @@ const allDogs = async (name) => {
       include: {
         model: Temperament,
         attributes: ["name"],
+        through: {
+          attributes: [],
+        },
       },
     });
     const final = filt.concat(dogsBdd);

@@ -1,7 +1,7 @@
 const axios = require("axios");
 require("dotenv").config();
 const { DB_APIKEY } = process.env;
-const { Dog } = require("../db");
+const { Dog, Temperament } = require("../db");
 
 const getDogById = async (id, fuente) => {
   const dog = fuente;
@@ -15,7 +15,16 @@ const getDogById = async (id, fuente) => {
     const filtrado = dogs.filter((doge) => doge.id == id);
     return filtrado;
   } else {
-    const dogs = await Dog.findByPk(id);
+    const dogsBdd = await Dog.findAll({
+      include: {
+        model: Temperament,
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    const dogs = dogsBdd.filter((doge) => doge.id == id);
     return dogs;
   }
 };

@@ -26,7 +26,7 @@ const getDogByIdHandler = async (req, res) => {
 };
 
 const postDog = async (req, res) => {
-  const { image, name, height, weight, life_span, temperament } = req.body;
+  const { image, name, height, weight, life_span, temperaments } = req.body;
   try {
     const newDog = await createDog({
       image,
@@ -34,7 +34,7 @@ const postDog = async (req, res) => {
       height,
       weight,
       life_span,
-      temperament,
+      temperaments,
     });
     res.status(201).json(newDog);
   } catch (error) {

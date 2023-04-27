@@ -15,7 +15,7 @@ const createDog = async ({
     weight,
     life_span,
   });
-  newDog.addTemperaments(temperaments);
+  await newDog.addTemperaments(temperaments);
   return newDog;
 };
 
