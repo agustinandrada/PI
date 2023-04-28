@@ -1,9 +1,20 @@
-import './App.css';
+import "./App.css";
+import { Detail, Form, Home, Landing, Nav, About } from "./Views/Index-Views";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
+
   return (
     <div className="App">
-      <h1>Henry Dogs</h1>
+      {location.pathname !== "/" && <Nav />}
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/form" element={<Form />} />
+        <Route path="/detail" element={<Detail />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </div>
   );
 }
