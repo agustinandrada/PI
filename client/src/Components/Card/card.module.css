@@ -1,6 +1,16 @@
 .card{
-    border: 1px solid black;
-    width: fit-content;
-    height: fit-content;
-    border-radius: 10px;
+    display: flexbox;
+    border: 2px solid black;
+    width: 300px;
+    height: 350px;
+    border-radius: 15px;
+    background-color: bisque;
+
 }
+
+.image{
+    width: 200px; 
+    height: 170px; 
+    border: 1px solid black;
+  }
+

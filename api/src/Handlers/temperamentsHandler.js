@@ -1,4 +1,4 @@
-const { posTemp, getTemp } = require("../Controllers/temperaments.control");
+const { posTemp } = require("../Controllers/temperaments.control");
 
 const getTemperaments = async (req, res) => {
   try {

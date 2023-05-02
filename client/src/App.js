@@ -9,9 +9,9 @@ function App() {
     <div className="App">
       {location.pathname !== "/" && <Nav />}
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/home/1" element={<Home />} />
         <Route path="/form" element={<Form />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
         <Route path="/" element={<Landing />} />
         <Route path="/about" element={<About />} />
       </Routes>

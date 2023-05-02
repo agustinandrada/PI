@@ -15,6 +15,8 @@ const Home = ()=>{
         <>
           <h1>Esta es la Vista del Home</h1>
           <Cards/>
+          <button id="prev-button">Anterior</button>
+          <button id="next-button">Siguiente</button>
         </>
     )
 }
