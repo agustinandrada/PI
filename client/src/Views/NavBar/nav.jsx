@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import style from "./Nav.module.css"
 
 const Nav = () =>{
     return(
-        <>
+        <div className={style.buttons}>
             <Link to='/home/1'>
                 <button>Home</button>
             </Link>
@@ -15,7 +16,7 @@ const Nav = () =>{
             <Link to='/form'>
                 <button>Create New Dog</button>
             </Link>
-        </>
+        </div>
     )
 }
 

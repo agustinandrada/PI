@@ -8,15 +8,17 @@ const CardsDetail = () => {
 
    return (
     <div className={style.cards}>
-      {dogs.map(({image, name, temperament, weight, life_span, id})=>{
+      {dogs.map(({image, name, temperaments,temperament, weight, life_span, id})=>{
         return (
         <CardDetail
         image={image}
         name={name}
         temperament={temperament}
+        temperaments={temperaments}
         weight={weight}
         life_span={life_span}
         id={id}
+        key={id}
         />)
       })}        
     </div>

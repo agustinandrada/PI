@@ -29,7 +29,7 @@ const allDogs = async (name) => {
       height: dog.height,
       weight: dog.weight,
       life_span: dog.life_span,
-      temperament: dog.temperament,
+      temperaments: dog.temperament,
     }));
 
     const filtrado2 = dogsBdd.filter((doge) => doge.name === name);
@@ -50,7 +50,7 @@ const allDogs = async (name) => {
       height: dog.height,
       weight: dog.weight,
       life_span: dog.life_span,
-      temperament: dog.temperament,
+      temperaments: dog.temperament,
     }));
 
     const dogsBdd = await Dog.findAll({

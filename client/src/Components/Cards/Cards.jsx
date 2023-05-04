@@ -8,15 +8,16 @@ const Cards = () => {
 
    return (
     <div className={style.cards}>
-      {dogs.map(({image, name, temperament, weight, life_span, id})=>{
+      {dogs.map(({image, name, weight, life_span, id, temperaments})=>{
         return (
         <Card
+        key={id}
         image={image}
         name={name}
-        temperament={temperament}
         weight={weight}
         life_span={life_span}
         id={id}
+        temperaments={temperaments}
         />)
       })}        
     </div>

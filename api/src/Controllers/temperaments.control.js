@@ -11,10 +11,8 @@ const posTemp = async () => {
     (dog) => dog.temperament != null && dog.temperament != undefined
   );
 
-  console.log(dog);
   const temp = await dog.map((dog) => ({
     name: dog.temperament.split(", "),
-    id: dog.id,
   }));
 
   const uniqueTemperaments = {};

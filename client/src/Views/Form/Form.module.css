@@ -1,0 +1,76 @@
+.form {
+    font-size: 80%;
+    border: 2px solid #5d4204;
+    border-radius: 5%;
+    box-sizing: border-box;
+    box-shadow:0 0 10px 0 rgba(4, 1, 1, 0.896);
+    background-image: url("../../Utils/Be\ Kind.png");
+    background-size:cover;
+    background-position-y: top;
+    width: 40%;
+    padding-top: 1%;
+    padding-bottom: 20%;
+    padding-left: 5%;
+    padding-right: 5%;
+    position:absolute;
+    top:10%;
+    bottom: 25%;
+    left: 30%;
+}
+
+.ref1{
+    border: 2px solid #5d4204;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow:0 0 10px 0 rgba(4, 1, 1, 0.896);
+    background-image: url("../../Utils/Tu\ historia\ Aviso\ para\ veterinaría\ Ilustrado\ Amarillo\ y\ Azul\ \(3\).png");
+    background-position: center;
+    background-size: cover;
+    height: 95%;
+    width: 25%;
+    position:absolute;
+    top: 2%;
+    left: 1%;
+}
+
+.ref2{
+    border: 2px solid #5d4204;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow:0 0 10px 0 rgba(4, 1, 1, 0.896);
+    background-image: url("../../Utils/Tu\ historia\ Aviso\ para\ veterinaría\ Ilustrado\ Amarillo\ y\ Azul\ \(2\).png");
+    background-position: center;
+    background-size: cover;
+    height: 95%;
+    width: 25%;
+    position:absolute;
+    top:2%;
+    right:1%
+}
+
+.small{
+    font-size:xx-small;
+}
+
+.error{
+    font-size: small;
+    color: red;
+    font-style: italic;
+}
+
+.button{
+    background: #92c7eb;
+    background-image: url("../../Utils/Doodle\ Purple\ Halloween\ Phone\ Wallpaper.png");
+    background-size: 120%;
+    background-position: center;
+    display: flex;
+    padding: 10%;
+    width: 30%;
+    border: 3px solid black;
+    border-radius: 15px;
+    border-color: rgba(255, 255, 255, 0.803);
+    height: 10%;
+    margin-top: 3%;
+    margin-left: 30%;
+    box-shadow: 0 0 10px rgb(4, 61, 147);
+}
