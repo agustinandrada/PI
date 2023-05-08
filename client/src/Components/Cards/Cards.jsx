@@ -6,6 +6,7 @@ const Cards = () => {
 
   const dogs = useSelector(state=>state.dogs)
 
+
    return (
     <div className={style.cards}>
       {dogs.map(({image, name, weight, life_span, id, temperaments})=>{

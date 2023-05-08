@@ -1,27 +1,65 @@
 import axios from "axios";
-import { GET_DOGS, GET_DETAIL, FILT_BDD, FILT_API, GET_NAME } from "./types";
+import {
+  GET_DOGS,
+  GET_DETAIL,
+  FILT_BDD,
+  FILT_API,
+  GET_NAME,
+  GET_ALL_TEMPERAMENTS,
+  GET_TEMP,
+  GET_ALL_DOGS,
+} from "./types";
+
+//! GET TEMPERAMENTS
+
+export const getTemperaments = () => {
+  return async function (dispatch) {
+    const data = await axios.get("http://localhost:3001/temperaments");
+    const temperaments = data.data;
+    dispatch({ type: GET_ALL_TEMPERAMENTS, payload: temperaments });
+  };
+};
 
 //! GET ALL DOGS
 
+export const getAllDogs = () => {
+  return async function (dispatch) {
+    const data = await axios.get("http://localhost:3001/dogs");
+    const dogs = data.data;
+
+    dispatch({ type: GET_ALL_DOGS, payload: dogs });
+  };
+};
+
 //! GET DOGS
 
-export const getDogs = (orden) => {
+export const getDogs = (orden, pag) => {
   if (!orden || orden === "normal") {
     return async function (dispatch) {
       const data = await axios.get("http://localhost:3001/dogs");
       const dogs = data.data;
-      const final = dogs.sort((a, b) => a.name.localeCompare(b.name));
+      const orden = dogs.sort((a, b) => a.name.localeCompare(b.name));
 
-      dispatch({ type: GET_DOGS, payload: final });
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = orden.slice(start, last);
+
+      dispatch({ type: GET_DOGS, payload: result });
     };
   }
   if (orden === "inverso") {
     return async function (dispatch) {
       const data = await axios.get("http://localhost:3001/dogs");
       const dogs = data.data;
-      const final = dogs.sort((a, b) => b.name.localeCompare(a.name));
+      const orden = dogs.sort((a, b) => b.name.localeCompare(a.name));
 
-      dispatch({ type: GET_DOGS, payload: final });
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = orden.slice(start, last);
+
+      dispatch({ type: GET_DOGS, payload: result });
     };
   }
   if (orden === "pesado") {
@@ -43,7 +81,13 @@ export const getDogs = (orden) => {
 
         return bWeight - aWeight;
       });
-      dispatch({ type: "GET_DOGS", payload: final });
+
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: "GET_DOGS", payload: result });
     };
   }
   if (orden === "liviano") {
@@ -66,7 +110,12 @@ export const getDogs = (orden) => {
         return aWeight - bWeight;
       });
 
-      dispatch({ type: "GET_DOGS", payload: final });
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: "GET_DOGS", payload: result });
     };
   }
 };
@@ -76,39 +125,51 @@ export const getDogs = (orden) => {
 
 export const getDetail = (id) => {
   return async function (dispatch) {
-    const detailData = await axios.get(`http://localhost:3001/dogs/${id}`);
-    const detail = detailData.data;
-    dispatch({ type: GET_DETAIL, payload: detail });
+    const data = await axios.get(`http://localhost:3001/dogs/${id}`);
+    const dogs = data.data;
+    dispatch({ type: GET_DETAIL, payload: dogs });
   };
 };
 
 //*---------------------------------------------------------------------------
 //!FILTRADO POR BASE DE DATOS
 
-export const getFiltBdd = (orden) => {
+export const getFiltBdd = (orden, pag) => {
   if (!orden || orden === "normal") {
     return async function (dispatch) {
-      const data = await axios.get("http://localhost:3001/dogs");
+      const data = await axios.get(`http://localhost:3001/dogs`);
       const dogs = data.data;
       const final = dogs
         .filter((dog) => typeof dog.id === "string")
         .sort((a, b) => a.name.localeCompare(b.name));
-      dispatch({ type: FILT_BDD, payload: final });
+
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: FILT_BDD, payload: result });
     };
   }
   if (orden === "inverso") {
     return async function (dispatch) {
-      const data = await axios.get("http://localhost:3001/dogs");
+      const data = await axios.get(`http://localhost:3001/dogs`);
       const dogs = data.data;
       const final = dogs
         .filter((dog) => typeof dog.id === "string")
         .sort((a, b) => b.name.localeCompare(a.name));
-      dispatch({ type: FILT_BDD, payload: final });
+
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: FILT_BDD, payload: result });
     };
   }
   if (orden === "liviano") {
     return async function (dispatch) {
-      const data = await axios.get("http://localhost:3001/dogs");
+      const data = await axios.get(`http://localhost:3001/dogs`);
       const datas = data.data;
       const dogs = datas.filter((dog) => typeof dog.id === "string");
       let final;
@@ -126,13 +187,20 @@ export const getFiltBdd = (orden) => {
 
         return aWeight - bWeight;
       });
-      dispatch({ type: FILT_BDD, payload: final });
+
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: FILT_BDD, payload: result });
     };
   }
   if (orden === "pesado") {
     return async function (dispatch) {
-      const data = await axios.get("http://localhost:3001/dogs");
-      const dogs = data.data;
+      const data = await axios.get(`http://localhost:3001/dogs`);
+      const datas = data.data;
+      const dogs = datas.filter((dog) => typeof dog.id === "string");
       let final;
 
       final = dogs.sort((a, b) => {
@@ -148,7 +216,13 @@ export const getFiltBdd = (orden) => {
 
         return bWeight - aWeight;
       });
-      dispatch({ type: FILT_BDD, payload: final });
+
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: FILT_BDD, payload: result });
     };
   }
 };
@@ -156,40 +230,42 @@ export const getFiltBdd = (orden) => {
 //*---------------------------------------------------------------------------------------
 //!FILTRADO POR API
 
-export const getFiltApi = (orden) => {
+export const getFiltApi = (orden, pag) => {
   if (!orden || orden === "normal") {
     return async function (dispatch) {
-      const data = await axios.get("http://localhost:3001/dogs");
+      const data = await axios.get(`http://localhost:3001/dogs`);
       const dogs = data.data;
       const final = await dogs
         .filter((dog) => typeof dog.id === "number")
         .sort((a, b) => a.name.localeCompare(b.name));
-      dispatch({ type: FILT_API, payload: final });
+
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: FILT_API, payload: result });
     };
   }
   if (orden === "inverso") {
     return async function (dispatch) {
-      const data = await axios.get("http://localhost:3001/dogs");
+      const data = await axios.get(`http://localhost:3001/dogs`);
       const dogs = data.data;
       const final = await dogs
         .filter((dog) => typeof dog.id === "number")
         .sort((a, b) => b.name.localeCompare(a.name));
-      dispatch({ type: FILT_API, payload: final });
-    };
-  }
-  if (orden === "inverso") {
-    return async function (dispatch) {
-      const data = await axios.get("http://localhost:3001/dogs");
-      const dogs = data.data;
-      const final = dogs
-        .filter((dog) => typeof dog.id === "string")
-        .sort((a, b) => b.name.localeCompare(a.name));
-      dispatch({ type: FILT_BDD, payload: final });
+
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: FILT_API, payload: result });
     };
   }
   if (orden === "liviano") {
     return async function (dispatch) {
-      const data = await axios.get("http://localhost:3001/dogs");
+      const data = await axios.get(`http://localhost:3001/dogs`);
       const datas = data.data;
       const dogs = datas.filter((dog) => typeof dog.id === "number");
       let final;
@@ -207,12 +283,18 @@ export const getFiltApi = (orden) => {
 
         return aWeight - bWeight;
       });
-      dispatch({ type: FILT_BDD, payload: final });
+
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: FILT_BDD, payload: result });
     };
   }
   if (orden === "pesado") {
     return async function (dispatch) {
-      const data = await axios.get("http://localhost:3001/dogs");
+      const data = await axios.get(`http://localhost:3001/dogs`);
       const datas = data.data;
       const dogs = datas.filter((dog) => typeof dog.id === "number");
       let final;
@@ -230,7 +312,13 @@ export const getFiltApi = (orden) => {
 
         return bWeight - aWeight;
       });
-      dispatch({ type: FILT_BDD, payload: final });
+
+      let start = 8 * pag;
+      let last = start + 8;
+
+      const result = final.slice(start, last);
+
+      dispatch({ type: FILT_BDD, payload: result });
     };
   }
 };
@@ -240,12 +328,73 @@ export const getFiltApi = (orden) => {
 
 export const getName = (name) => {
   return async function (dispatch) {
-    const data = await axios.get("http://localhost:3001/dogs");
+    const data = await axios.get(`http://localhost:3001/dogs`);
     const dogs = data.data;
-    const final = await dogs.filter((dog) => dog.name.includes(name));
+    const nombre = name.toLowerCase();
+    const final = await dogs.filter((dog) =>
+      dog.name.toLowerCase().includes(nombre)
+    );
     dispatch({ type: GET_NAME, payload: final });
   };
 };
 
-//*----------------------------------------------------------------------------------------------'
-//! PAGINADO
+//*-------------------------------------------------------------------------------------------
+//! BUSCAR POR TEMPERAMENTOS
+
+export const getTemp = (temperament, pag) => {
+  return async function (dispatch) {
+    const data = await axios.get(`http://localhost:3001/dogs`);
+    const dogs = data.data;
+
+    const temps = [];
+    temps.push(temperament);
+
+    const temp = temps
+      .flatMap((t) => t.toLowerCase().split(/\s*,\s*|\s+/))
+      .sort();
+
+    const final = dogs.filter((dog) => {
+      if (typeof dog.id === "number" && dog.temperaments) {
+        console.log(dog);
+        const comp = dog.temperaments.toLowerCase().split(", ").sort();
+        let contador = 0;
+
+        if (comp.length === 0) {
+          return false;
+        }
+
+        for (let i = 0; i < temp.length; i++) {
+          if (comp.includes(temp[i])) {
+            contador++;
+          }
+        }
+        return contador === temp.length;
+      } else {
+        if (dog.temperaments) {
+          const allT = dog.temperaments;
+          const comp = allT.map((t) => t.name.toLowerCase()).sort();
+          let contador = 0;
+
+          if (comp.length === 0) {
+            return false;
+          }
+
+          for (let i = 0; i < temp.length; i++) {
+            if (comp.includes(temp[i])) {
+              contador++;
+            }
+          }
+          return contador === temp.length;
+        }
+      }
+      return false;
+    });
+
+    let start = 8 * pag;
+    let last = start + 8;
+
+    const result = final.slice(start, last);
+
+    dispatch({ type: GET_TEMP, payload: result });
+  };
+};

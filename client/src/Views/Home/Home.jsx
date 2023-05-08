@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import Cards from "../../Components/Cards/Cards";
-import { useDispatch } from "react-redux";
-import { getDogs, getFiltApi, getFiltBdd, getName, getNext } from "../../Redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getDogs, getFiltApi, getFiltBdd, getName,  getTemperaments, getTemp, getAllDogs} from "../../Redux/actions";
+import style from "./Home.module.css"
+
+
+
 
 const Home = ()=>{
-
   const dispatch = useDispatch();
 
   const [name, setName] = useState("")
@@ -13,9 +16,12 @@ const Home = ()=>{
 
   const[orden, setOrden] = useState("")
 
-  // const[pagina, setPagina]= useState("")
+  const[temperament, setTemperament] = useState("")
 
-  // const[disabled, setDisabled]= useState("")
+  const[pag, setPag] = useState(0)
+
+  const paginas = useSelector(state=>state.paginas)
+
 
   const handleChange =(event) =>{
     setName(event.target.value)
@@ -29,52 +35,94 @@ const Home = ()=>{
     setOrden(event.target.value)
   }
 
-  // const handlePag=(event)=>{
-  //    const valor = event.target.value
-  //    if(valor === "next"){
-  //     contador = contador + 1
-  //     dispatch(getNext())
-  //     }if(valor === "prev" && contador > 0){
-  //       contador = contador - 1
-  //     }
-  // }
+  const handleTemp = (event)=>{
+    setTemperament(event.target.value)
+  }
+
+
 
 
   const onFilter = () => {
     if(filtro === "reset"){
-      dispatch(getDogs(orden))
+      dispatch(getDogs(orden, pag))
     }if(filtro === "bdd"){
-      dispatch(getFiltBdd(orden))
+      dispatch(getFiltBdd(orden, pag))
     }if(filtro === "api"){
-      dispatch(getFiltApi(orden))
+      dispatch(getFiltApi(orden, pag))
     }
   };
 
 
-  const onSearch =()=>{
+  const onSearchName =()=>{
     dispatch(getName(name))
   }
 
+  const onSearchTemp =()=>{
+    dispatch(getTemp(temperament, pag))
+  }
+
+
   const handleKeyPress =(event)=>{
-    if (event.key === "Enter") {
-      onSearch();
+    if (event.key === "Enter" && event.target.value === name) {
+      onSearchName();
+    }if(event.key === "Enter" && event.target.value === temperament){
+      onSearchTemp();
+    }if(!event.target.value && event.key === "Enter"){
+      dispatch(getDogs(pag))
     }
   }
   
-    
+  const handlePag = (event) => {
+ 
+  
+    if (event.target.value === "next") {
+      setPag(prevPag => {
+        const newPag = prevPag + 1;
+        return newPag;
+      });
+    }
+    if (event.target.value === "prev" && pag !== 0) {
+      setPag(prevPag => {
+        const newPag = prevPag - 1;
+        return newPag;
+      })
+    } if (event.target.value === "end") {
+      setPag(prevPag => {
+        const newPag = parseInt(paginas.length/8);
+        return newPag;
+      });
+    } if (event.target.value === "first") {
+      setPag(prevPag => {
+        const newPag = 0;
+        return newPag;
+      });
+    }     
+  };
+  
+  const disableP = pag === 0;
+  const disableN = pag === parseInt(paginas.length/8)
+  
+
   useEffect(()=>{
-      dispatch(getDogs(orden))
-    },[dispatch, orden])
+    dispatch(getAllDogs())
+      dispatch(getDogs(orden, pag));
+      dispatch(getTemperaments());
+      },[])
 
     return(
         <>
+        <div className={style.filters}>
             <div>
-              <input type='search' value={name} onChange={handleChange} onKeyPress={handleKeyPress} />
+              <input className={style.input} type='search' value={name} onChange={handleChange} onKeyPress={handleKeyPress} placeholder="Enter a Race" />
+            </div>
+            
+            <div>
+              <input className={style.input} type='search' value={temperament} onChange={handleTemp} onKeyPress={handleKeyPress} placeholder="Enter Temperaments" />
             </div>
 
             <div>
-              <select  onChange={handleFilter}>
-                <option value="reset">Reset filter</option>
+              <select  onChange={handleFilter} className={style.select}>
+                <option value="reset">All Dogs</option>
                 <option value="api">Api</option>
                 <option value="bdd">Base de Datos</option>
               </select>
@@ -82,18 +130,23 @@ const Home = ()=>{
             </div>
 
             <div>
-              <select  onChange={handleOrder}>
+              <select  onChange={handleOrder} className={style.select}>
                 <option value="normal">A-Z</option>
                 <option value="inverso">Z-A</option>
-                <option value="pesado">Pesado - Liviano</option>
-                <option value="liviano">Liviano - Pesado</option>
+                <option value="pesado">Heavier to Lighter</option>
+                <option value="liviano">Lighter to Heavier</option>
               </select>
             </div>
 
+            </div>
             <Cards/>
 
-            <button id="prev-button" value="next" >Anterior</button>
-            <button id="next-button" value="prev" >Siguiente</button>
+            <button className={style.button} value="first" onClick={handlePag} disabled={disableP}>Primera</button>
+            <button className={style.button} value="prev" onClick={handlePag} disabled={disableP}>Anterior</button>
+            <button className={style.button} value="next" onClick={handlePag} disabled={disableN}>Siguiente</button>
+            <button className={style.button} value="end" onClick={handlePag} disabled={disableN}>Ultima</button>
+
+           
         </>
     )
 }

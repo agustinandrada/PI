@@ -6,46 +6,46 @@ export default function validation(form, setErrors, errors) {
   const newErrors = {};
 
   if (!/^[ a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/.test(form.name)) {
-    newErrors.name = "Nombre invalido";
+    newErrors.name = "Invalid Name";
   }
 
   if (form.weight.length < 5) {
-    newErrors.weight = "Falta especificar peso";
+    newErrors.weight = "Missing to specify weight";
   } else {
     if (!/[0-9_-]/.test(form.weight)) {
-      newErrors.weight = "Expresion invalida";
+      newErrors.weight = "Invalid Expression";
     }
   }
 
   if (form.height.length < 5) {
-    newErrors.height = "Falta especificar altura";
+    newErrors.height = "Missing to specify height";
   } else {
     if (!/[0-9_-]/.test(form.height)) {
-      newErrors.height = "Expresion invalida";
+      newErrors.height = "Invalid Expression";
     }
   }
 
   if (parseInt(form.life_span) < 1) {
-    newErrors.life_span = "Falta especificar años de vida";
+    newErrors.life_span = "Missing to specify life span";
   } else {
     if (!/[0-9_-]/.test(form.life_span)) {
-      newErrors.life_span = "Expresion invalida";
+      newErrors.life_span = "Invalid Expression";
     }
   }
 
   if ([form.temperaments].length < 0) {
-    newErrors.temperaments = "Asigne por lo menos un temperamento";
+    newErrors.temperaments = "Assign at least one temperament";
   } else {
     if (!/[0-9_-]/.test(form.temperaments)) {
-      newErrors.temperaments = "Expresion invalida";
+      newErrors.temperaments = "Invalid Expression";
     }
   }
 
   if (!form.image) {
-    newErrors.image = "Ingrese un URL";
+    newErrors.image = "Enter URL";
   } else {
     if (!/(https?:\/\/.*\.(?:png|jpg))/i.test(form.image)) {
-      newErrors.image = "Expresion invalida";
+      newErrors.image = "Invalid expression";
     }
   }
 

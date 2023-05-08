@@ -1,8 +1,24 @@
 .cards{
     display: flex;
     margin-left: 8em;
+    margin-top: 1%;
+    margin-bottom: 10%;
     flex-direction: row;
     border-radius: 15px;
     flex-wrap: wrap;
     gap: 1em;
+    height: 0%;
+}
+
+.detail{
+    display: flex;
+    position: absolute;
+    margin-left:40%;
+    margin-top: 5%;
+    flex-direction: row;
+    height: 100%;
+    border-radius: 15px;
+    flex-wrap: wrap;
+    font-size: large;
+    font-family:"Gill Sans", sans-serif;;
 }

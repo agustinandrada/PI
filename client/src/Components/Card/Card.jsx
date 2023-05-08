@@ -4,28 +4,28 @@ import { Link } from "react-router-dom"
 const Card = ({name, image, temperaments, weight, id }) => {
     if(typeof id === "number" ){
     return(
-    <Link to={`/detail/${id}`}>
+    <Link style={{ textDecoration: "none" }} to={`/detail/${id}`}>
+        <p className={style.title}>{name}</p>
         <div className={style.card}>
-            <p>{name}</p>
             <p>
                 <img className={style.image} src={image.url} alt={name} />
             </p>
-            <p>Temperamento: {temperaments}</p>
-            <p>Peso: {weight.metric} kg</p>
+            <p>Temperaments: {temperaments}</p>
+            <p>Weight range: {weight.metric} kg</p>
         </div> 
     </Link>
     ) }else{
         const tempe = temperaments.map((temp)=> temp.name)
         const final = tempe.join(", ")
         return(
-            <Link to={`/detail/${id}`}>
+            <Link style={{ textDecoration: "none" }} to={`/detail/${id}`}>
+                <p className={style.title}>{name}</p>
                 <div className={style.card}>
-                    <p>{name}</p>
                     <p>
                         <img className={style.image} src={image} alt={name} />
                     </p>
-                    <p>Temperamento: {final}</p>
-                    <p>Peso: {weight} kg</p>
+                    <p>Temperaments: {final}</p>
+                    <p>Weight range: {weight} kg</p>
                 </div> 
             </Link>
             )

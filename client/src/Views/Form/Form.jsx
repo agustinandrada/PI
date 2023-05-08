@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import style from "./Form.module.css"
 import validation from "../validation";
 import axios from "axios"
+import { Link } from "react-router-dom";
 
 const Form = ()=>{
 
@@ -32,9 +33,6 @@ const Form = ()=>{
         temperaments:"",
         image:""
     })
-
-
-
 
 
  const changeHandler = (event) => {
@@ -74,10 +72,18 @@ const tempHHandler = (event) => {
 }
 
 const handleSubmit = (event) => {
+    if(form.name.length !== 0 &&
+    form.weight.length !== 0 &&
+    form.height.length !== 0 &&
+    form.life_span.length !== 0 &&
+    form.temperaments.length !== 0 &&
+    form.image.length !== 0){
         event.preventDefault(); //! Asi no recarga la pag cuando tocamos enter
         axios.post("http://localhost:3001/dogs", form)
         .then(alert("Whof Whof"))
-        .catch(err=>alert(err));
+        .catch(err=>alert(err))}else{
+            alert("Missing Data")
+        };
 };
 
 
@@ -106,10 +112,11 @@ useEffect(() => {
                 <label></label>
                 <input 
                 type="text"
-                placeholder="Name" 
+                placeholder="Race" 
                 value={form.name} 
                 onChange={changeHandler} 
-                name="name">
+                name="name"
+                className={style.input}>
                 </input> 
                 <span className={style.error}>{errors.name}</span>        
             </div>
@@ -123,9 +130,9 @@ useEffect(() => {
                 placeholder="Weight Min" 
                 onChange={weightHandler}
                 name="min"
-                value={weightH.name}>
+                value={weightH.name}
+                className={style.input}>
                 </input> 
-                <> Kg </>
                 <span className={style.error}>{errors.weight}</span>        
             </div>
 
@@ -135,9 +142,9 @@ useEffect(() => {
                 placeholder="Weight Max"
                 onChange={weightHandler}
                 name="max"
-                value={weightH.name}>
+                value={weightH.name}
+                className={style.input}>
                 </input>  
-                <> Kg </> 
                 <span className={style.error}>{errors.weight}</span>   
             </div>
 
@@ -150,9 +157,9 @@ useEffect(() => {
                 placeholder="Height Min"
                 name="min" 
                 onChange={heightHandler}
-                value={heightH.value}>
+                value={heightH.value}
+                className={style.input}>
                 </input> 
-                <> Cm </> 
                 <span className={style.error}>{errors.height}</span>
             </div>
             
@@ -162,9 +169,9 @@ useEffect(() => {
                 placeholder="Height Max"
                 name="max" 
                 onChange={heightHandler}
-                value={heightH.value}>
+                value={heightH.value}
+                className={style.input}>
                 </input>   
-                <> Cm </> 
                 <span className={style.error}>{errors.height}</span>        
             </div>
 
@@ -177,10 +184,10 @@ useEffect(() => {
                 placeholder="Life expectancy" 
                 value={form.life_span} 
                 onChange={changeHandler} 
-                name="life_span">
+                name="life_span"
+                className={style.input}>
                 </input>
-                <span className={style.error}>{errors.life_span}</span>  
-                <> Years </> 
+                <span className={style.error}>{errors.life_span}</span> 
             </div>
 
             <>-----------</>
@@ -192,27 +199,42 @@ useEffect(() => {
                 placeholder="Temperaments" 
                 name="temperaments"
                 onChange={tempHHandler}
-                >
+                className={style.input}>
                 </input>
                 <span className={style.error}>{errors.temperaments}</span> 
-                <p className={style.small}>Ingresar el id del temperamento, separado por coma</p>         
+                <p className={style.small}>Enter the ID of the temperaments with a space between each one.</p>         
             </div>
 
             <>-----------</>
 
             <div>
-                <label>Ingrese URL</label>
+                <label></label>
                 <input 
                 type="text" 
                 value={form.image}
                 onChange={changeHandler}
-                name="image">
+                name="image"
+                className={style.input}
+                placeholder="Enter URL">
                 </input> 
-                <span className={style.error}> {errors.image}</span>        
+                <span className={style.error}> {errors.image}</span>      
             </div>
 
-            <button type="submit" className={style.button}></button>
+            <button type="submit" className={style.button}>Create</button>
         </form>
+
+        <div className={style.buttons}>
+        <Link to='/home/1'>
+                <button>Home</button>
+            </Link>
+            <Link to='/'>
+                <button>Landing</button>
+            </Link>
+            <Link to='/form'>
+                <button>New Dog</button>
+            </Link>
+
+        </div>
         </>
     )
 }
