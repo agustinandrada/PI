@@ -6,7 +6,7 @@ const getDogsHandler = async (req, res) => {
   const { name } = req.query;
   const dogs = await allDogs(name);
   try {
-    res.status(201).json(dogs);
+    res.status(200).json(dogs);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -19,7 +19,7 @@ const getDogByIdHandler = async (req, res) => {
 
   try {
     const dogId = await getDogById(id, fuente);
-    res.status(201).json(dogId);
+    res.status(200).json(dogId);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

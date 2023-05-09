@@ -13,7 +13,9 @@ const getDogById = async (id, fuente) => {
       )
     ).data;
     const filtrado = dogs.filter((doge) => doge.id == id);
-    return filtrado;
+    if (filtrado.length === 0) {
+      return statusCode(400);
+    } else return filtrado;
   } else {
     const dogsBdd = await Dog.findAll({
       include: {
@@ -25,7 +27,9 @@ const getDogById = async (id, fuente) => {
       },
     });
     const dogs = dogsBdd.filter((doge) => doge.id == id);
-    return dogs;
+    if (dogs.length === 0) {
+      return statusCode(400);
+    } else return dogs;
   }
 };
 
